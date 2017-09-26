@@ -9,8 +9,7 @@
         {{ count }}
 
         <div class="user-info">
-            Session:{{ session }}
-            <template v-if="session == null">
+            <template v-if="login == false">
                 <router-link :to="{ name: 'Login', params: {} }">Login</router-link>
                 <router-link :to="{ name: 'Register', params: {} }">Register</router-link>
             </template>
@@ -38,12 +37,13 @@ export default {
             data: APP_ID,
             count: this.$store.state.count,
             session: this.$store.state.session,
-            user: this.$store.state.user
+            user: this.$store.state.user,
+            login: this.$store.state.login
         }
     },
-    created: function(){
-        vm.session = this.$store.state.session
-    },
+    // created: function(){
+    //     vm.session = this.$store.state.session
+    // },
     store
 
 }

@@ -4,6 +4,7 @@ import axios from 'axios'
 const state = {
     count: 1,
     session: null,
+    login: false, // 是否登录
     user: [],
     app: {
         app_id: config.app_id,
@@ -18,6 +19,17 @@ const mutations={
     },
     reduce(state, n){
         state.count-=n;
+    },
+    change_login(state, status){
+        state.login = status
+    },
+
+    logout(state){
+        // 用户退出
+        // 1. login 设置为 false
+        // 2. 删除 user数据
+        // 3. 删除 sessionToken 数据
+        state.login = false
     },
     // 更新用户的 session
     update_session(state, session){

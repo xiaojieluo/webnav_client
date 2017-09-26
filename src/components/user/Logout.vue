@@ -6,11 +6,9 @@
             <router-link :to="{ name: 'Index', params: {} }">返回首页</router-link>
         </div>
     </div>
-
 </template>
 
 <script>
-
 import store from '@/store'
 
 export default {
@@ -29,6 +27,7 @@ export default {
         this.func.delCookie('dove_password')
         this.$store.commit('update_session', null)
         this.$store.commit('update_user', null)
+        this.$store.commit('logout')
         this.msg = "退出成功！<br />"
         this.status = true
     },
