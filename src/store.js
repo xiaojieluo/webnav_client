@@ -20,8 +20,8 @@ const mutations={
     reduce(state, n){
         state.count-=n;
     },
-    change_login(state, status){
-        state.login = status
+    login(state){
+        state.login = true
     },
 
     logout(state){

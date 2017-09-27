@@ -4,17 +4,35 @@
     <el-col :xs="24" :sm="{span: 6,offset: 9}">
       <span class="title">
           <el-alert
-            v-if="trys > 0"
+            v-if="result != undefined"
             :title="result.title"
             :type="result.type"
             :description="result.descriptions"
             :closable="false"
             show-icon>
-          </el-alert>      </span>
+          </el-alert>
+      </span>
+
       <el-row>
-        <el-input v-model="username" placeholder="Username." type="text"></el-input>
-        <el-input v-model="password" placeholder="Password." type="password"></el-input>
-        <el-button type="primary" @click="login">登录</el-button>
+        <el-input class="input"
+            v-model="username"
+            placeholder="Username."
+            type="text">
+            <template slot="prepend">Username:</template>
+        </el-input>
+
+        <el-input class="input"
+            v-model="password"
+            placeholder="Password."
+            type="password">
+            <template slot="prepend">Password:</template>
+        </el-input>
+
+        <div class="button">
+            <el-button type="primary" @click="login">登录</el-button>
+            <el-button type="primary" @click="back">返回</el-button>
+        </div>
+
       </el-row>
     </el-col>
   </el-row>
@@ -33,11 +51,7 @@ export default {
             session: this.$store.state.session,
             trys: 0,
             result_error: 'error',
-            result: {
-                'type': '', // 提示类型
-                'title': '', // 提示标题
-                'descriptions': '', // 文字说明
-            }
+            result: null
         }
     },
     methods: {
@@ -80,29 +94,20 @@ export default {
             // set cookie ('user_session', sessionToken)
             this.status = true
             // this.$store.login = true // 已登录
-            this.$store.commit('change_login', true)
+            this.$store.commit('login')
             this.$store.commit('update_session', response.data.sessionToken)
             this.$store.commit('update_user', response.data)
             this.func.setCookie('user_session', response.data.sessionToken)
 
-            this.updateMessage('success', '登录成功', '欢迎您，'+response.data.username)
+            this.$message({
+                message: '登录成功,欢迎您：'+response.data.username,
+                type: 'success'
+            });
+
             let redirect = decodeURIComponent(this.$route.query.redirect || '/');
             this.$router.push({
                 path: redirect
             })
-            // this.$router.push({ path: '/' })
-
-            // 显示消息框
-            // this.result = {
-            //     'type': 'success',
-            //     'title': '登录成功',
-            //     'descriptions': '文字说明'
-            // }
-            // this.result.type = 'success'
-            // this.result.title = '登录成功'
-            // this.result.descriptions = '文字说明'
-
-
         },
         failed: function failed(response) {
             console.log("login failed.")
@@ -114,11 +119,9 @@ export default {
             //     'descriptions': '文字说明'
             // }
             this.updateMessage('error', '登录失败,错误码: '+response.data.code, response.data.error)
-            // this.result = {
-            //     'type': 'info',
-            //     'title': '登录成功',
-            //     'descriptions': '文字说明'
-            // }
+        },
+        back: function back(res){
+            this.$router.push({ path: '/' })
         }
     },
     store
@@ -126,5 +129,11 @@ export default {
 </script>
 
 <style>
+.input{
+    margin-top: 15px;
+}
 
+.button {
+    margin-top: 15px;
+}
 </style>

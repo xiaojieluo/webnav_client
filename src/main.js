@@ -22,6 +22,8 @@ Vue.prototype.config  = config
 Vue.prototype.func = func
 Vue.config.productionTip = false
 Vue.config.devtools = true
+
+axios.defaults.baseURL = 'http://127.0.0.1:8888'
 Vue.prototype.$ajax = axios
 
 // const store = new Vuex.Store({
@@ -53,6 +55,7 @@ router.beforeEach((to, from, next) => {
         next();
     }
 })
+
 // http request 拦截器
 axios.interceptors.request.use(
     config => {

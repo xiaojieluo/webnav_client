@@ -7,6 +7,7 @@ import Links from '@/components/Links'
 import Count from '@/components/Count'
 
 import Login from '@/components/user/Login'
+import Register from '@/components/user/Register'
 import Logout from '@/components/user/Logout'
 
 Vue.use(Router)
@@ -38,6 +39,11 @@ export default new Router({
         path: '/Login',
         name: 'Login',
         component: Login
+    },
+    {
+        path: '/register',
+        name: 'Register',
+        component: Register
     },
     {
         path: '/Logout',
