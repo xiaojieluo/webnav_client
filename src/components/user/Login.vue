@@ -56,6 +56,7 @@ export default {
     },
     methods: {
         login: function login(){
+            console.log(this.$store)
             this.trys += 1
             this.$ajax.post(this.config.api_user_login,{
                 username: this.username,
