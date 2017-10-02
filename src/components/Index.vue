@@ -9,12 +9,12 @@
         {{ count }}
 
         <div class="user-info">
-            <template v-if="login == false">
+            <template v-if="session == null || session == 'null'">
                 <router-link :to="{ name: 'Login', params: {} }">Login</router-link>
                 <router-link :to="{ name: 'Register', params: {} }">Register</router-link>
             </template>
             <template v-else>
-                欢迎您： {{ user.username }}|
+                欢迎您： <router-link :to="{ name: 'Me'}">{{ user.username }}</router-link>|
                 <router-link :to="{ name: 'Logout', params: {} }">退出</router-link>
             </template>
 
@@ -38,7 +38,7 @@ export default {
             count: this.$store.state.count,
             session: this.$store.state.session,
             user: this.$store.state.user,
-            login: this.$store.state.login
+            // login: this.$store.state.login
         }
     },
     // created: function(){

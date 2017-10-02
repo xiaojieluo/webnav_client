@@ -26,22 +26,17 @@ Vue.config.devtools = true
 axios.defaults.baseURL = 'http://127.0.0.1:8888'
 Vue.prototype.$ajax = axios
 
-// const store = new Vuex.Store({
-//     state: {
-//         count: 0
-//     },
-//     mutations: {
-//         increment (state) {
-//             state.count++
-//         }
-//     }
-// })
-
 import store from '@/store'
 
 router.beforeEach((to, from, next) => {
     if (to.meta.requireAuth) {  // 判断该路由是否需要登录权限
-        if (store.state.login == true) {  // 通过vuex state获取当前的token是否存在
+        // console.log(store.state.session)
+        // console.log("window.localStorage.session = ")
+        // console.log(window.localStorage.getItem('session'))
+        // var session = store.state.session
+        var session = window.localStorage.getItem('session')
+
+        if ( session != null || session != undefined) {  // 通过vuex state获取当前的token是否存在
             next();
         }
         else {
@@ -104,17 +99,29 @@ var vm = new Vue({
     template: '<App/>',
     components: { App },
     mounted: function(){
+        var session = window.localStorage.getItem('session')
+        var user = window.localStorage.getItem('user')
+
+        console.log("localStorage")
+        console.log(session)
+
+        // if (session != null || session != undefined){
+        //     this.$store.dispatch('user_login')
+        //     // this.$store.commit('session', user.sessionToken)
+        //     // this.$store.commit('user', user)
+        // }
         // 从 cookie取出 session，查询服务器获取用户的信息存入 vuex store中
-        var user_session = this.func.getCookie('user_session')
-        if (this.func.getCookie('user_session')){
-            this.$ajax.get('http://127.0.0.1:8888/users/me',{
-                headers: {'X-LC-Session': user_session}
-            }).then((response) => {
-                if (response.status == 200){
-                    store.state.session = user_session
-                    store.state.user = response.data
-                }
-            })
-        }
-    }
+        // var user_session = this.func.getCookie('user_session')
+        // if (this.func.getCookie('user_session')){
+        //     this.$ajax.get('http://127.0.0.1:8888/users/me',{
+        //         headers: {'X-LC-Session': user_session}
+        //     }).then((response) => {
+        //         if (response.status == 200){
+        //             store.state.session = user_session
+        //             store.state.user = response.data
+        //         }
+        //     })
+        // }
+    },
+    store
 })

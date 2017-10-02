@@ -12,6 +12,11 @@ import Logout from '@/components/user/Logout'
 
 import Links from '@/components/user/Links'
 
+import Me from '@/components/user/Me'
+
+import LinkAdd from '@/components/link/Add'
+import LinkIndex from '@/components/link/Index'
+
 Vue.use(Router)
 
 export default new Router({
@@ -52,6 +57,23 @@ export default new Router({
         name: 'Logout',
         component: Logout
     },
+    //  我的主页
+    {
+        path: '/me',
+        name: 'Me',
+        component: Me,
+        meta:{
+            requireAuth: true
+        }
+    },
+    {
+        path: '/link',
+        name: 'LinkIndex',
+        component: LinkIndex,
+        children: [
+            { path: 'add', name:'LinkAdd', component: LinkAdd }
+        ]
+    }
     // {
     //     path: '/users/:username/links',
     //     name: 'Links',

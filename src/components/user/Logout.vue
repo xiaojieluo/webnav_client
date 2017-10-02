@@ -26,10 +26,10 @@ export default {
                 type: 'warning'
             }).then(() => {
                 this.func.delCookie('dove_password')
-                this.$store.commit('update_session', null)
-                this.$store.commit('update_user', null)
+                this.$store.commit('update_session', undefined)
+                this.$store.commit('update_user', undefined)
                 this.$store.commit('logout')
-                    this.$message({
+                this.$message({
                     type: 'success',
                     message: '退出成功'
                 });

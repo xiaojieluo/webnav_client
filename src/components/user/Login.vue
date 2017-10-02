@@ -40,6 +40,7 @@
 
 <script>
 import store from '@/store'
+import { mapActions } from 'vuex'
 
 export default {
     name: 'Login',
@@ -73,6 +74,7 @@ export default {
             }).catch(function(response) {
                 console.log("Catch error.")
                 console.log(this)
+                console.log(response)
                 // this.failed(response)
             });
         },
@@ -94,21 +96,28 @@ export default {
             // this.$store.user = response.data
             // set cookie ('user_session', sessionToken)
             this.status = true
-            // this.$store.login = true // 已登录
-            this.$store.commit('login')
-            this.$store.commit('update_session', response.data.sessionToken)
-            this.$store.commit('update_user', response.data)
+            this.$store.dispatch('login', response.data).then((res) => {
+                if ((typeof this.session !== null)){
+                    this.$message({
+                        message: '登录成功,欢迎您：'+response.data.username,
+                        type: 'success'
+                    });
+                    let redirect = decodeURIComponent(this.$route.query.redirect || '/');
+                    this.$router.push({
+                        path: redirect
+                    })
+                } else {
+                    this.$message({
+                        message: '登录失败,请重试',
+                        type: 'error'
+                    });
+                    console.log(this.$store)
+                }
+            });
             this.func.setCookie('user_session', response.data.sessionToken)
 
-            this.$message({
-                message: '登录成功,欢迎您：'+response.data.username,
-                type: 'success'
-            });
 
-            let redirect = decodeURIComponent(this.$route.query.redirect || '/');
-            this.$router.push({
-                path: redirect
-            })
+
         },
         failed: function failed(response) {
             console.log("login failed.")
@@ -123,7 +132,10 @@ export default {
         },
         back: function back(res){
             this.$router.push({ path: '/' })
-        }
+        },
+        // ...mapActions({
+        //     login: 'login'
+        // })
     },
     store
 }

@@ -1,25 +1,25 @@
 <template>
-      <el-row class="content">
+      <el-row class="content" >
         <el-col :xs="24" :sm="{span: 6,offset: 9}">
-            <el-button type="primary" @click="openFullScreen" v-loading.fullscreen.lock="fullscreenLoading">
-              显示整页加载，3 秒后消失
-            </el-button>
 
-        <el-card v-for="link in links" class="box-card" style="margin-top:15px">
+        <div class="card" v-loading.fullscreen.lock="fullscreenLoading">
+            <el-card v-for="link in links" class="box-card" style="margin-top:15px">
 
-            <h3>{{ link.name }}</h3>
-            <small>{{ link.desc }}</small><br />
-            <small>tags:
-                <span v-for="tag in link.tags">
-                    <a href="#">
-                        <el-tag type="primary">
-                            #{{tag}}
-                        </el-tag>
-                    </a>
-                </span>
-            </small>
+                <h3><a :href="link.url">{{ link.title }}</a></h3>
+                <small>{{ link.desc }}</small><br />
+                <small>tags:
+                    <span v-for="tag in link.tags">
+                        <a href="#">
+                            <el-tag type="primary">
+                                #{{tag}}
+                            </el-tag>
+                        </a>
+                    </span>
+                </small>
 
-        </el-card>
+            </el-card>
+
+        </div>
 
         <div class="block" style="margin-top: 15px">
             <el-pagination
@@ -42,16 +42,18 @@ export default {
       session: this.$store.state.session,
       user: this.$store.state.user,
       links: null,
-      pagination: null
+      pagination: 0,
     }
   },
   methods: {
     openFullScreen: function() {
       console.log(this.session)
       this.fullscreenLoading = true;
+    //   this.loading = true;
       setTimeout(() => {
+        //   this.loading = false
         this.fullscreenLoading = false;
-    }, 3000);
+    }, 300);
   },
 
   // 分页函数
@@ -61,6 +63,7 @@ export default {
             limit: this.pagination.limit,
             page: val,
         }
+        this.openFullScreen()
         console.log("请求第 "+ val +" 数据")
         this.get_links(params)
         console.log(`当前页: ${val}`);
@@ -70,7 +73,7 @@ export default {
         if (params == undefined){
             params = {
                 where: {"user": this.user.objectId},
-                // limit: 1
+                limit: 8
             }
         }
 

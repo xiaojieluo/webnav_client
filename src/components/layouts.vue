@@ -9,7 +9,7 @@
 import store from '@/store'
 
 export default {
-  name: 'app',
+  name: 'layouts',
   data () {
       return {
           user: this.$store.state.user,
