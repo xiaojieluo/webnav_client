@@ -3,6 +3,7 @@
     <el-row class="content" >
         <el-col :xs="24" :sm="{span: 6,offset: 9}">
             用户名:  {{user.username}}
+            {{user.age}}
             <p class="line">统计信息</p>
             动态
             <hr>

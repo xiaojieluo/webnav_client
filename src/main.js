@@ -9,6 +9,13 @@ import router from './router'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import Vuex from 'vuex'
+import moment from "moment";
+import VueMomentJS from "vue-momentjs";
+
+// 中文
+moment.locale('zh-cn')
+
+Vue.use(VueMomentJS, moment);
 // Vue.use()
 Vue.use(ElementUI)
 Vue.use(Vuex, VueAxios, axios)
@@ -98,6 +105,9 @@ var vm = new Vue({
     router,
     template: '<App/>',
     components: { App },
+    data (){
+        Bus: new Vue()
+    },
     mounted: function(){
         var session = window.localStorage.getItem('session')
         var user = window.localStorage.getItem('user')

@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <router-link :to="{ name: 'Index', params: {} }"><img src="./assets/logo.png"></router-link>
+    <router-link :to="{ name: 'Index', params: {} }"><img src="../assets/logo.png"></router-link>
     <router-view :key="key"></router-view>
   </div>
 </template>

@@ -69,6 +69,13 @@ const actions = {
         store.commit('user', null)
         window.localStorage.removeItem('session')
         window.localStorage.removeItem('user')
+    },
+
+    get_links(store, params) {
+        /**
+         * 获取链接
+         * params: 过滤条件
+         */
     }
 }
 

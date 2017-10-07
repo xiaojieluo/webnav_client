@@ -98,7 +98,7 @@ export default {
             this.status = true
             this.$store.dispatch('login', response.data).then((res) => {
                 if ((typeof this.session !== null)){
-                    this.$message({
+                    this.$notify({
                         message: '登录成功,欢迎您：'+response.data.username,
                         type: 'success'
                     });

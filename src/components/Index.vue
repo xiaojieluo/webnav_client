@@ -1,51 +1,64 @@
 <template lang="html">
     <div class="index">
-        <p><router-link :to="{ name: 'Index', params: {} }">首页</router-link> |
-        <router-link :to="{ name: 'Tags', params: {} }">标签</router-link>
-        <router-link :to="{ name: 'Links', params: {} }">Links</router-link>
-
-        </p>
-        Hello， 欢迎使用 vlink 个人网址导航！
-        {{ count }}
-
-        <div class="user-info">
-            <template v-if="session == null || session == 'null'">
-                <router-link :to="{ name: 'Login', params: {} }">Login</router-link>
-                <router-link :to="{ name: 'Register', params: {} }">Register</router-link>
-            </template>
-            <template v-else>
-                欢迎您： <router-link :to="{ name: 'Me'}">{{ user.username }}</router-link>|
-                <router-link :to="{ name: 'Logout', params: {} }">退出</router-link>
-            </template>
-
-        </div>
+        <el-button type="info"><router-link :to="{ name: 'LinkAdd', params: {} }">提交一个链接</router-link></el-button>
 
 
+        <el-tabs  v-model="activeName" @tab-click="handleClick">
+            <el-tab-pane label="最新" name="new"><LinkList v-bind:params="params" ></LinkList></el-tab-pane>
+            <el-tab-pane label="热门" name="hot"><LinkList v-bind:params="params" ></LinkList></el-tab-pane>
+        </el-tabs>
 
     </div>
 
 </template>
 
 <script>
-
 import store from '@/store'
-var vm = this
-export default {
-    name: 'index',
-    data () {
-        return {
-            data: APP_ID,
-            count: this.$store.state.count,
-            session: this.$store.state.session,
-            user: this.$store.state.user,
-            // login: this.$store.state.login
-        }
-    },
-    // created: function(){
-    //     vm.session = this.$store.state.session
-    // },
-    store
+import LinkList from '@/components/link/list'
 
+export default {
+  name: 'index',
+  data() {
+    return {
+      session: this.$store.state.session,
+      user: this.$store.state.user,
+      activeName: 'new'
+    }
+  },
+  computed: {
+    params() {
+      console.log("ActiveName")
+      console.log(this.activeName)
+      return this.init_params()
+    }
+  },
+  methods: {
+    init_params: function() {
+        // 初始化参数
+      var params = {}
+      if (this.activeName == 'new') {
+        params.order = '-createdAt'
+        params.limit = 8
+      } else if (this.activeName == 'hot') {
+        params.order = 'updatedAt'
+        params.limit = 8
+      }
+      return params
+    },
+    handleClick(tab, event) {
+        // 处理标签切换事件
+      console.log("tab event")
+      console.log(tab, event)
+      },
+  },
+
+  components: {
+    LinkList
+  },
+
+  mounted: function() {
+  },
+  store
 }
 </script>
 

@@ -13,9 +13,12 @@ import Logout from '@/components/user/Logout'
 import Links from '@/components/user/Links'
 
 import Me from '@/components/user/Me'
+import User from '@/components/user/index'
 
 import LinkAdd from '@/components/link/Add'
 import LinkIndex from '@/components/link/Index'
+
+// 布局
 
 Vue.use(Router)
 
@@ -67,12 +70,22 @@ export default new Router({
         }
     },
     {
-        path: '/link',
+        path: '/user/:username',
+        name: 'User',
+        component: User,
+    },
+    {
+        path: '/link/:linkid',
         name: 'LinkIndex',
         component: LinkIndex,
-        children: [
-            { path: 'add', name:'LinkAdd', component: LinkAdd }
-        ]
+        // children: [
+        //     { path: 'add', name:'LinkAdd', component: LinkAdd }
+        // ]
+    },
+    {
+        path: '/link/add',
+        name: 'LinkAdd',
+        component: LinkAdd
     }
     // {
     //     path: '/users/:username/links',
