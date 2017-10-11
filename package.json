@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "axios": "^0.16.2",
-    "element-ui": "^1.4.6",
+    "element-ui": "^2.0.0-alpha.2",
     "moment": "^2.18.1",
     "vue": "^2.4.4",
     "vue-axios": "^2.0.2",
